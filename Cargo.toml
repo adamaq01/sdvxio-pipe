@@ -1,0 +1,25 @@
+[workspace]
+resolver = "2"
+members = [
+    "sdvxio-pipe",
+    "sdvxio-pipe-program",
+    "sdvxio-pipe-proto",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+
+[workspace.dependencies]
+sdvxio-pipe-proto = { path = "./sdvxio-pipe-proto" }
+slotmap = "1"
+thread-priority = "3"
+printf-compat = "0.3"
+log = "0.4"
+env_logger = { version = "0.11", features = ["color"] }
+anstyle = "1"
+chrono = "0.4"
+postcard = { version = "1", features = ["alloc", "use-std"] }
+serde = { version = "1", features = ["derive"] }
+bindgen = "0.72"
+panic-log = "0.3"

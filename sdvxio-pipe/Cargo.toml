@@ -1,0 +1,24 @@
+[package]
+name = "sdvxio-pipe"
+version.workspace = true
+edition.workspace = true
+
+[lib]
+crate-type = ["cdylib"]
+name = "sdvxio"
+
+[profile.release]
+strip = true  # Automatically strip symbols from the binary.
+opt-level = "z"  # Optimize for size.
+lto = true
+codegen-units = 1
+panic = "abort"
+
+[dependencies]
+sdvxio-pipe-proto.workspace = true
+log = { workspace = true, features = ["std"] }
+panic-log.workspace = true
+
+[build-dependencies]
+bindgen.workspace = true
+
