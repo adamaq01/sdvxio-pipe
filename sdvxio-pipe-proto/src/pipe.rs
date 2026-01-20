@@ -19,7 +19,7 @@ impl<W: Write, T: serde::Serialize> Sender<W, T> {
     }
 
     pub fn send(&mut self, msg: &T) -> std::io::Result<()> {
-        let data = postcard::to_allocvec(msg).map_err(|err| {
+        let data = postcard::to_vec::<_, 16>(msg).map_err(|err| {
             std::io::Error::new(
                 std::io::ErrorKind::Other,
                 format!("Serialization error: {}", err),
@@ -40,7 +40,7 @@ impl<R: Read, T: serde::de::DeserializeOwned> Receiver<R, T> {
     }
 
     pub fn recv(&mut self) -> std::io::Result<T> {
-        let mut buffer = vec![0u8; 128];
+        let mut buffer = [0u8; 16];
         let (msg, _): (T, _) = postcard::from_io((&mut self.ipc, &mut buffer)).map_err(|err| {
             std::io::Error::new(
                 std::io::ErrorKind::Other,
